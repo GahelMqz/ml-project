@@ -13,7 +13,8 @@ import Test2 from './components/Test2.vue'
     </div>
 
     <div class="custom-scrollbar flex-1 overflow-y-auto w-full mx-auto max-w-4xl px-16">
-      <Test />
+      <!-- Aqui iran las respuestas -->
+      <p>Respuestas...</p>
 
       <div
         class="p-2 rounded-full bg-slate-400/30 fixed bottom-2/11 left-1/2 -translate-x-1/2 animate-bounce"
