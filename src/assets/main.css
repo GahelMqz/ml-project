@@ -1,13 +1,9 @@
-@import './base.css';
 @import 'tailwindcss';
 
-@theme {
-  --color-test: '#711717';
-}
-
 :root {
-  background-color: #f5f5f5;
-
+  background-color: #f2f5fa;
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+  font-style: normal;
   /* color: #f5f5f5; */
 }
 

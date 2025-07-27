@@ -2,8 +2,6 @@
 import IconArrowDown from './components/icons/IconArrowDown.vue'
 import InputChat from './components/InputChat.vue'
 import ResetChat from './components/ResetChat.vue'
-import Test from './components/Test.vue'
-import Test2 from './components/Test2.vue'
 </script>
 
 <template>
@@ -17,7 +15,7 @@ import Test2 from './components/Test2.vue'
       <p>Respuestas...</p>
 
       <div
-        class="p-2 rounded-full bg-slate-400/30 fixed bottom-2/11 left-1/2 -translate-x-1/2 animate-bounce"
+        class="p-2 rounded-full bg-slate-200/70 fixed bottom-2/11 left-1/2 -translate-x-1/2 animate-bounce"
       >
         <IconArrowDown />
       </div>
