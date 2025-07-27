@@ -1,5 +1,30 @@
 @import './base.css';
+@import 'tailwindcss';
 
+@theme {
+  --color-test: '#711717';
+}
+
+:root {
+  background-color: #f5f5f5;
+
+  /* color: #f5f5f5; */
+}
+
+body {
+  /* margin: 2rem; */
+}
+
+button {
+  /* background-color: #0055ff; */
+  /* box-shadow: 0 1px 3px 0 #0055ff; */
+}
+
+button:hover:hover {
+  /* background-color: #4080ff; */
+}
+
+/* 
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -32,4 +57,4 @@ a,
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
-}
+} */

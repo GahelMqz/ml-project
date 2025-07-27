@@ -1,85 +1,45 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import IconArrowDown from './components/icons/IconArrowDown.vue'
+import InputChat from './components/InputChat.vue'
+import ResetChat from './components/ResetChat.vue'
+import Test from './components/Test.vue'
+import Test2 from './components/Test2.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div class="h-screen flex flex-col">
+    <div class="sticky top-0 mt-2 mx-8">
+      <ResetChat />
     </div>
-  </header>
 
-  <RouterView />
+    <div class="custom-scrollbar flex-1 overflow-y-auto w-full mx-auto max-w-4xl px-16">
+      <Test />
+
+      <div
+        class="p-2 rounded-full bg-slate-400/30 fixed bottom-2/11 left-1/2 -translate-x-1/2 animate-bounce"
+      >
+        <IconArrowDown />
+      </div>
+    </div>
+
+    <div class="sticky bottom-0 w-full mx-auto max-w-4xl">
+      <InputChat />
+    </div>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  right: 20px;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
+.custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+  border-radius: 4px;
 }
 </style>
