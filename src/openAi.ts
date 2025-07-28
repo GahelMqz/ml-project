@@ -9,22 +9,19 @@ export const askLLM = async (prompt: string): Promise<string> => {
     {
       model: 'gpt-3.5-turbo', // o 'gpt-3.5-turbo'
       messages: [{ role: 'user', content: prompt }],
-      temperature: 0.7
+      temperature: 0.7,
     },
     {
       headers: {
         Authorization: `Bearer ${OPENAI_KEY}`,
-        'Content-Type': 'application/json'
-      }
-    }
+        'Content-Type': 'application/json',
+      },
+    },
   )
   return response.data.choices[0].message.content
 }
 
-export const buildMedicalPrompt = (
-  userInput: string,
-  questionKey: string
-): string => {
+export const buildMedicalPrompt = (userInput: string, questionKey: string): string => {
   // 🎯 Define las posibles categorías (solo para campos enum y boolean)
   const categorias: Record<string, string[]> = {
     gender: ['Male', 'Female'],
@@ -36,11 +33,11 @@ export const buildMedicalPrompt = (
     hypertension: ['Yes', 'No'],
     asthma: ['Yes', 'No'],
     cirrhosis: ['Yes', 'No'],
-    other_cancer: ['Yes', 'No']
+    other_cancer: ['Yes', 'No'],
   }
 
-  const booleanFields = Object.keys(categorias).filter(key => categorias[key].includes('Yes'))
-  const numberFields = ['age', 'bmi', 'cholesterol_level']
+  const booleanFields = Object.keys(categorias).filter((key) => categorias[key].includes('Yes'))
+  const numberFields = ['age', 'bmi', 'cholesterol_level', 'height', 'weight']
   const stringFields = ['country']
   const dateFields = ['diagnosis_date', 'end_treatment_date']
 
@@ -121,6 +118,14 @@ Eres un asistente médico que extrae valores numéricos clínicos de respuestas 
 Respuesta del paciente: "${userInput}"
 
 Extrae el número correspondiente al campo: "${questionKey}"
+
+- Si el paciente responde "no se" o deja vacío:
+   • Para cholesterol_level: devuelve 202.5
+   • Para height o weight: vuelve a preguntar al paciente
+
+- Si el paciente responde mas de 200 para height volver a preguntar
+- Si el paciente responde mas de 500 o menos de 20 para weight volver a preguntar
+
 Devuelve solo el número, sin texto adicional.
 `.trim()
   }
@@ -141,7 +146,7 @@ Eres un asistente médico que extrae fechas de diagnóstico o tratamiento del pa
 
 Respuesta del paciente: "${userInput}"
 
-Devuelve la fecha en formato DD/MM/YYYY o YYYY-MM-DD.
+Devuelve la fecha unicamente en formato DD/MM/YYYY.
 No agregues texto adicional.
 `.trim()
   }
