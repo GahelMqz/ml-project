@@ -1,6 +1,9 @@
 <template>
   <div class="h-screen flex flex-col">
-    <div class="flex-1 overflow-y-auto p-8">
+    <div class="w-full sticky top-0">
+      <ResetChat />
+    </div>
+    <div class="flex-1 overflow-y-auto p-8 custom-scrollbar overflow-x-hidden">
       <TransitionGroup tag="div" name="slide" class="space-y-4" appear>
         <div
           v-for="(msg, index) in messages"
@@ -10,7 +13,7 @@
         >
           <div v-if="msg.from === 'bot'" class="flex items-start gap-2">
             <span class="bg-blue-100 p-2 rounded-full"
-              ><img src="../assets/logo.webp" class="h-6 w-6"
+              ><img src="../assets/logo.webp" class="h-6 w-6 max-h-6 max-w-6"
             /></span>
             <p class="bg-blue-100 p-4 rounded-3xl">
               {{ msg.text }}
@@ -46,11 +49,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Transition } from 'vue'
+import { ref } from 'vue'
 import InputChat from './InputChat.vue'
 import { useChatWizard } from '../chatWizard'
 import { onMounted } from 'vue'
 import IconUser from './icons/IconUser.vue'
+import ResetChat from './ResetChat.vue'
 
 // Mensajes acumulados
 const messages = ref<{ text: string; from: 'bot' | 'user' | 'system' | 'json' | 'error' }[]>([])
@@ -111,5 +115,19 @@ function getAnimationClass(msg: any) {
 .slide-from-right.slide-leave-to {
   opacity: 0;
   transform: translateX(50px);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  right: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.4);
+  border-radius: 4px;
 }
 </style>

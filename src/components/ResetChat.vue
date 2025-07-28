@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import IconReset from '@/components/icons/IconReset.vue'
+
+const resetChat = () => {
+  localStorage.clear()
+  window.location.reload()
+}
 </script>
 
 <template>
@@ -12,6 +17,7 @@ import IconReset from '@/components/icons/IconReset.vue'
     </div>
 
     <button
+      @click="resetChat"
       class="flex items-center gap-2 cursor-pointer hover:bg-slate-200 p-2 rounded-full font-semibold"
     >
       <IconReset /> Reiniciar chat
