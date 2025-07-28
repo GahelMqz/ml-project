@@ -58,11 +58,20 @@ const sendReply = async () => {
   mensaje.value = ''
   loading.value = false
 }
+
+const handleKeydown = (e: any) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault()
+    sendReply()
+    mensaje.value = ''
+  }
+}
 </script>
 
 <template>
   <div class="flex gap-2 mb-8">
     <textarea
+      @keydown="handleKeydown"
       name=""
       id=""
       ref="textarea"
