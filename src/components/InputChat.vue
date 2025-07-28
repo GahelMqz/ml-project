@@ -56,6 +56,7 @@ const sendReply = async () => {
   }
 
   mensaje.value = ''
+  emit('newMessage', { from: 'remove-system' })
   loading.value = false
 }
 

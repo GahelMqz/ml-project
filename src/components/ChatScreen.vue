@@ -3,7 +3,10 @@
     <div class="w-full sticky top-0">
       <ResetChat />
     </div>
-    <div class="flex-1 overflow-y-auto p-8 custom-scrollbar overflow-x-hidden">
+    <div
+      ref="messagesContainer"
+      class="flex-1 overflow-y-auto p-8 custom-scrollbar overflow-x-hidden"
+    >
       <TransitionGroup tag="div" name="slide" class="space-y-4" appear>
         <div
           v-for="(msg, index) in messages"
@@ -27,6 +30,7 @@
             <p class="bg-slate-200 p-4 rounded-3xl">{{ msg.text }}</p>
             <span class="bg-slate-200 p-2 rounded-full"> <IconUser /> </span>
           </div>
+
           <div
             v-else-if="msg.from === 'system'"
             class="text-gray-500 italic flex items-center gap-2 animate-pulse"
@@ -34,6 +38,7 @@
             <span class="material-symbols-outlined animate-spin"> progress_activity </span>
             {{ msg.text }}
           </div>
+
           <div v-else-if="msg.from === 'json'" class="bg-gray-100 p-4 rounded-md font-mono text-sm">
             <pre>{{ msg.text }}</pre>
           </div>
@@ -49,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { nextTick, ref, watch } from 'vue'
 import InputChat from './InputChat.vue'
 import { useChatWizard } from '../chatWizard'
 import { onMounted } from 'vue'
@@ -58,6 +63,16 @@ import ResetChat from './ResetChat.vue'
 
 // Mensajes acumulados
 const messages = ref<{ text: string; from: 'bot' | 'user' | 'system' | 'json' | 'error' }[]>([])
+
+const messagesContainer = ref<HTMLElement | null>(null)
+
+// Hacer scroll hacia abajo cada vez que se agregue un nuevo mensaje
+watch(messages, async () => {
+  await nextTick()
+  if (messagesContainer.value) {
+    messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
+  }
+})
 
 const wizard = useChatWizard()
 
@@ -70,10 +85,18 @@ onMounted(() => {
 
 // Función que recibe nuevos mensajes desde InputChat
 const handleNewMessage = (msg: {
-  text: string
-  from: 'bot' | 'user' | 'system' | 'json' | 'error'
+  text?: string
+  from: 'bot' | 'user' | 'system' | 'json' | 'error' | 'remove-system'
 }) => {
-  messages.value.push(msg)
+  if (msg.from === 'remove-system') {
+    messages.value = messages.value.filter((m) => m.from !== 'system')
+  } else {
+    // Ensure text is always a string
+    messages.value.push({
+      text: msg.text ?? '',
+      from: msg.from as 'bot' | 'user' | 'system' | 'json' | 'error',
+    })
+  }
 }
 
 function getAnimationClass(msg: any) {
