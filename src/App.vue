@@ -1,12 +1,13 @@
 <script setup lang="ts">
-
 import ChatScreen from './components/ChatScreen.vue'
 </script>
 
 <template>
-  <div class="flex-1 w-full mx-auto max-w-4xl px-4">
-  <ChatScreen />
-</div>
+  <div class="h-screen flex flex-col">
+    <div class="custom-scrollbar flex-1 overflow-y-auto w-full mx-auto max-w-4xl px-16">
+      <ChatScreen />
+    </div>
+  </div>
 </template>
 
 <style scoped>
