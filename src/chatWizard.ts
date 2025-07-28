@@ -409,7 +409,7 @@ export const useChatWizard = () => {
       smoking_status: data.smoking_status as number,
       family_history: (data.family_history as number) ?? 0,
       bmi: (data.bmi as number) ?? 0,
-      cholesterol_level: (data.cholesterol_level as number) ?? 202.5, // Valor predeterminado
+      cholesterol_level: (data.cholesterol_level as number) ?? 202.5,
       asthma: (data.asthma as number) ?? 0,
       hypertension: (data.hypertension as number) ?? 0,
       cirrhosis: (data.cirrhosis as number) ?? 0,
@@ -419,7 +419,6 @@ export const useChatWizard = () => {
       country: data.country as string,
     }
 
-    // ✅ Solo incluir campos de cáncer si hasCancer = true
     if (data.hasCancer === true) {
       finalJson.treatment_type = data.treatment_type as number
       finalJson.cancer_stage = data.cancer_stage as number
@@ -429,15 +428,24 @@ export const useChatWizard = () => {
 
     completedJson = finalJson
 
-    // 🚀 Enviar datos al endpoint y mostrar respuesta
+    // 🚀 Enviar datos al endpoint y guardar respuesta
     try {
-      const result = await sendPrediction(finalJson)
-      console.log('✅ Respuesta del endpoint:', result)
+      const response = await sendPrediction(finalJson)
+      console.log('✅ Respuesta del endpoint:', response)
+
+      // ✅ Guardar user_data en localStorage
+      const userData = {
+        input: response.input,
+        probability: response.probability,
+      }
+      localStorage.setItem('user_data', JSON.stringify(userData))
+
+      // ✅ Guardar filtered_data en localStorage
+      localStorage.setItem('filtered_data', JSON.stringify(response.filtered_data))
     } catch (error) {
       console.error('❌ Error al enviar los datos al endpoint:', error)
     }
 
-    // ✅ Agregar sugerencias contextuales
     const suggestions = generateContextualSuggestion()
     return `✅ Información procesada correctamente.${suggestions}`
   }

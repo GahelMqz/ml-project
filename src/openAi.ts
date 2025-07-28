@@ -136,6 +136,8 @@ Eres un asistente médico que extrae el nombre del país a partir de respuestas 
 
 Respuesta del paciente: "${userInput}"
 
+Convierte el pais mencionado a inglés y primera letra mayúscula (e.j: francia : France).
+
 Devuelve **solo** el país mencionado, sin explicaciones ni texto adicional.
 `.trim()
   }
