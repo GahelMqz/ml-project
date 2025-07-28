@@ -1,15 +1,60 @@
 <script setup lang="ts">
 import IconArrowUp from '@/components/icons/IconArrowUp.vue'
 import { ref } from 'vue'
+import { useChatWizard } from '@/chatWizard'
+import { askLLM, buildMedicalPrompt } from '@/openAi'
+
+const emit = defineEmits(['newMessage'])
 
 const mensaje = ref('')
 const textarea = ref<HTMLTextAreaElement | null>(null)
+const wizard = useChatWizard()
+const loading = ref(false)
 
 const autoResize = () => {
   const el = textarea.value
   if (!el) return
   el.style.height = 'auto'
   el.style.height = el.scrollHeight + 'px'
+}
+
+const sendReply = async () => {
+  if (!mensaje.value || loading.value) return
+  loading.value = true
+
+  emit('newMessage', { from: 'user', text: mensaje.value })
+
+  // 🔍 Obtener pregunta actual (tipo clínico)
+  const currentQuestion = wizard.getCurrentQuestion?.() // ej: 'smoking_status'
+
+  // 🧠 Interpretar con LLM usando prompt contextual
+  emit('newMessage', { from: 'system', text: '🧠 Interpretando tu respuesta...' })
+
+  let interpreted = ''
+  if (currentQuestion) {
+    const prompt = buildMedicalPrompt(mensaje.value, currentQuestion)
+    interpreted = await askLLM(prompt)
+  } else {
+    interpreted = await askLLM(`${mensaje.value}\nConvierte esta respuesta en un valor clínico entendible.`)
+  }
+
+  emit('newMessage', { from: 'bot', text: `🤖 ${interpreted.trim()}` })
+
+  // 🧪 Procesar con wizard usando respuesta del modelo
+  const result = await wizard.handleResponse(interpreted.trim())
+
+  if (result.includes('No entendí')) {
+    emit('newMessage', { from: 'bot', text: `⚠️ ${result}` })
+  } else if (result.includes('procesada')) {
+    emit('newMessage', { from: 'bot', text: `✅ ${result}` })
+    const json = wizard.getResult()
+    emit('newMessage', { from: 'json', text: JSON.stringify(json, null, 2) })
+  } else {
+    emit('newMessage', { from: 'bot', text: `👨‍⚕️ ${result}` })
+  }
+
+  mensaje.value = ''
+  loading.value = false
 }
 </script>
 
@@ -26,8 +71,11 @@ const autoResize = () => {
     ></textarea>
 
     <div class="content-center">
-      <button class="bg-[#0055ff] hover:bg-[#4080ff] rounded-full p-2 cursor-pointer">
-        <IconArrowUp />
+      <button
+        @click="sendReply"
+        class="bg-[#0055ff] hover:bg-[#4080ff] rounded-full p-2 cursor-pointer"
+      >
+      <IconArrowUp />
       </button>
     </div>
   </div>

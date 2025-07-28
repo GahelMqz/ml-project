@@ -1,30 +1,12 @@
 <script setup lang="ts">
-import IconArrowDown from './components/icons/IconArrowDown.vue'
-import InputChat from './components/InputChat.vue'
-import ResetChat from './components/ResetChat.vue'
+
+import ChatScreen from './components/ChatScreen.vue'
 </script>
 
 <template>
-  <div class="h-screen flex flex-col">
-    <div class="sticky top-0 mt-2 mx-8">
-      <ResetChat />
-    </div>
-
-    <div class="custom-scrollbar flex-1 overflow-y-auto w-full mx-auto max-w-4xl px-16">
-      <!-- Aqui iran las respuestas -->
-      <p>Respuestas...</p>
-
-      <div
-        class="p-2 rounded-full bg-slate-200/70 fixed bottom-2/11 left-1/2 -translate-x-1/2 animate-bounce"
-      >
-        <IconArrowDown />
-      </div>
-    </div>
-
-    <div class="sticky bottom-0 w-full mx-auto max-w-4xl">
-      <InputChat />
-    </div>
-  </div>
+  <div class="flex-1 w-full mx-auto max-w-4xl px-4">
+  <ChatScreen />
+</div>
 </template>
 
 <style scoped>
