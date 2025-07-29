@@ -1,9 +1,13 @@
 @import 'tailwindcss';
 
 :root {
-  background-color: #f2f5fa;
+  /* background-color: #f2f5fa; */
   font-family: 'Atkinson Hyperlegible', sans-serif;
   font-style: normal;
+  background-image: url('./background.svg');
+  background-repeat: no-repeat;
+  background-size: cover; /* o 'contain' o valores específicos */
+  background-position: center;
   /* color: #f5f5f5; */
 }
 
