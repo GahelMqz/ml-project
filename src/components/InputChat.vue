@@ -77,8 +77,8 @@ const handleKeydown = (e: any) => {
       id=""
       ref="textarea"
       v-model="mensaje"
-      placeholder="Pregunta lo que quieras..."
-      class="custom-scrollbar w-full max-h-40 rounded-4xl py-4 px-8 border-2 border-slate-200 focus:outline-none shadow-md shadow-slate-200 resize-none"
+      placeholder="Escribe tus respuestas..."
+      class="custom-scrollbar w-full max-h-40 rounded-4xl py-4 px-8 border-2 border-blue-200 focus:outline-none shadow-md shadow-blue-200 resize-none bg-gradient-to-br from-white to-blue-100"
       @input="autoResize"
     ></textarea>
 
@@ -86,7 +86,7 @@ const handleKeydown = (e: any) => {
       <button
         :disabled="!mensaje.trim() || loading"
         @click="sendReply"
-        class="bg-[#0055ff] hover:bg-[#4080ff] rounded-full p-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+        class="bg-gradient-to-r from-[#0055ff] to-[#4080ff] hover:from-[#0055ff] hover:bg-[#4080ff] transition-all duration-200 transform hover:scale-105 rounded-full p-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <IconArrowUp />
       </button>
@@ -96,7 +96,7 @@ const handleKeydown = (e: any) => {
 
 <style scoped>
 textarea {
-  background-color: white;
+  /* background-color: white; */
 }
 
 .custom-scrollbar::-webkit-scrollbar {

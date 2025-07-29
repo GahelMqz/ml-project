@@ -18,7 +18,7 @@ const resetChat = () => {
 
     <button
       @click="resetChat"
-      class="flex items-center gap-2 cursor-pointer hover:bg-slate-200 p-2 rounded-full font-semibold"
+      class="flex items-center gap-2 cursor-pointer hover:bg-slate-200 transition-all duration-200 transform hover:scale-105 p-2 rounded-full font-semibold"
     >
       <IconReset /> Reiniciar chat
     </button>

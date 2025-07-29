@@ -29,33 +29,33 @@ type Question =
 const questions: Question[] = [
   {
     key: 'hasCancer',
-    text: '¿Actualmente tienes diagnóstico de cáncer de pulmón?',
+    text: '¿Te han diagnosticado cáncer pulmonar?',
     type: 'boolean',
   },
-  { key: 'age', text: '¿Cuál es tu edad?', type: 'number' },
+  { key: 'age', text: '¿Qué edad tienes?', type: 'number' },
   {
     key: 'gender',
-    text: '¿Cuál es tu sexo biológico? (Masculino/Femenino)',
+    text: '¿Cuál es tu género masculino o femenino?',
     type: 'enum',
     values: ['Male', 'Female'],
   },
   { key: 'country', text: '¿En qué país resides?', type: 'string' },
   {
     key: 'family_history',
-    text: '¿Tienes antecedentes familiares de cáncer pulmonar?',
+    text: '¿Existen antecedentes de cáncer pulmonar en tu familia?',
     type: 'boolean',
   },
   {
     key: 'smoking_status',
-    text: '¿Cuál es tu situación como fumador?',
+    text: 'Cuéntame un poco sobre tu relación con el humo y el cigarro',
     type: 'enum',
     values: ['Never Smoked', 'Passive Smoker', 'Former Smoker', 'Current Smoker'],
   },
-  { key: 'height', text: '¿Cuál es estatura en CM?', type: 'number' },
-  { key: 'weight', text: '¿Cuál es tu peso en KG?', type: 'number' },
+  { key: 'height', text: 'Dime cuánto mides en CM', type: 'number' },
+  { key: 'weight', text: 'Dime cuánto pesas en KG', type: 'number' },
   {
     key: 'cholesterol_level',
-    text: '¿Cuál es tu nivel de colesterol total? Deseable(Menos de 200mg/dl) | Alto(Entre 200-239mg/dl) | Muy Alto(Mas de 240mg/dl) | Si no lo conoce puede dejar este campo vacio',
+    text: '¿Conoces tu nivel de colesterol? 🟢Deseable (menos de 200mg/dl) | 🟡Alto (entre 200 - 239mg/dl) | 🔴Muy Alto (mas de 240mg/dl)',
     type: 'number',
   },
   { key: 'hypertension', text: '¿Tienes hipertensión?', type: 'boolean' },
@@ -64,7 +64,7 @@ const questions: Question[] = [
   { key: 'other_cancer', text: '¿Has tenido algún otro tipo de cáncer?', type: 'boolean' },
   {
     key: 'treatment_type',
-    text: '¿Cuál fue el tratamiento recibido?',
+    text: '¿Qué tratamiento recibiste?',
     type: 'enum',
     values: ['Chemotherapy', 'Surgery', 'Combined', 'Radiation'],
   },
@@ -74,10 +74,10 @@ const questions: Question[] = [
     type: 'enum',
     values: ['Stage I', 'Stage II', 'Stage III', 'Stage IV'],
   },
-  { key: 'diagnosis_date', text: '¿Cuál fue la fecha de diagnóstico? (DD/MM/YYYY)', type: 'date' },
+  { key: 'diagnosis_date', text: '¿En qué fecha te lo diagnosticaron? (DD/MM/YYYY)', type: 'date' },
   {
     key: 'end_treatment_date',
-    text: '¿Cuál fue la fecha de finalización del tratamiento? (DD/MM/YYYY)',
+    text: '¿En qué fecha finalizó tu tratamiento? (DD/MM/YYYY)',
     type: 'date',
   },
 ]

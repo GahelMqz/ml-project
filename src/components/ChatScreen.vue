@@ -21,6 +21,8 @@
             <p class="bg-blue-100 p-4 rounded-3xl">
               {{ msg.text }}
             </p>
+
+            <!-- <Test /> -->
           </div>
 
           <div
@@ -60,6 +62,7 @@ import { useChatWizard } from '../chatWizard'
 import { onMounted } from 'vue'
 import IconUser from './icons/IconUser.vue'
 import ResetChat from './ResetChat.vue'
+// import Test from './Test.vue'
 
 // Mensajes acumulados
 const messages = ref<{ text: string; from: 'bot' | 'user' | 'system' | 'json' | 'error' }[]>([])
