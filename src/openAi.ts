@@ -123,6 +123,7 @@ Extrae el número correspondiente al campo: "${questionKey}"
    • Para cholesterol_level: devuelve 202.5
    • Para height o weight: vuelve a preguntar al paciente
 
+- Si el paciente responde height con punto decimal quitalo de la respuesta
 - Si el paciente responde mas de 200 para height volver a preguntar
 - Si el paciente responde mas de 500 o menos de 20 para weight volver a preguntar
 
