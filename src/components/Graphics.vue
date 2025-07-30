@@ -27,13 +27,16 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 defineOptions({ name: 'ProbabilityThermometerVisual' })
 
-const props = defineProps<{ probability: number | null }>()
+// ✅ CORREGIDO: Cargar datos del localStorage igual que UserCard
+const userData = ref<Record<string, any> | null>(null)
+const probability = ref<number | null>(null)
 
-const probabilityValue = computed(() => +((props.probability ?? 0) * 100).toFixed(1))
+// ✅ Usar la misma fórmula que UserCard
+const probabilityValue = computed(() => +(((probability.value ?? 0) * 100).toFixed(1)))
 
 const fillHeight = computed(() => probabilityValue.value)
 
@@ -63,6 +66,16 @@ const state = computed(() => {
       text: 'Peligro',
       class: 'bg-red-100 text-red-800 ring-2 ring-red-300/50 shadow-red-200/50'
     }
+  }
+})
+
+// ✅ CORREGIDO: Cargar del localStorage igual que UserCard
+onMounted(() => {
+  const stored = localStorage.getItem('user_data')
+  if (stored) {
+    const parsed = JSON.parse(stored)
+    userData.value = parsed.input // 👈 igual que UserCard
+    probability.value = parsed.probability // 👈 igual que UserCard
   }
 })
 </script>

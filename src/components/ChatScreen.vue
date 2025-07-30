@@ -47,7 +47,7 @@
             <UserCard />
             <div class="flex gap-2 mt-8">
               <ColesterolGraphic :cholesterol_level="userData?.cholesterol_level" />
-              <Graphics :probability="probability ?? 0" />
+              <Graphics />
             </div>
           </div>
           <div v-else-if="msg.from === 'error'" class="text-red-500">⚠️ {{ msg.text }}</div>
