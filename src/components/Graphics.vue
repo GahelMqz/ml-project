@@ -31,9 +31,9 @@ import { computed } from 'vue'
 
 defineOptions({ name: 'ProbabilityThermometerVisual' })
 
-const props = defineProps<{ probability: number }>()
+const props = defineProps<{ probability: number | null }>()
 
-const probabilityValue = computed(() => +(props.probability * 100).toFixed(1))
+const probabilityValue = computed(() => +((props.probability ?? 0) * 100).toFixed(1))
 
 const fillHeight = computed(() => probabilityValue.value)
 
