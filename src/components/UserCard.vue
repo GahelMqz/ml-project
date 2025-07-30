@@ -36,13 +36,17 @@
         </div>
 
         <div class="bg-blue-50/50 rounded-xl p-4 transition-transform">
-          <span class="text-[#0055ff] font-semibold block mb-1">IMC</span>
-          <span class="text-slate-400">{{ userData.bmi }}</span>
+          <span class="text-[#0055ff] font-semibold block mb-1">IMC {{ userData.bmi }}</span>
+          <span :class="stateImc(userData.bmi).class"> {{ stateImc(userData.bmi).text }}</span>
         </div>
 
         <div class="bg-blue-50/50 rounded-xl p-4 transition-transform">
-          <span class="text-[#0055ff] font-semibold block mb-1">Nivel de coresterol</span>
-          <span class="text-slate-400 truncate">{{ userData.cholesterol_level }} mg/dL</span>
+          <span class="text-[#0055ff] font-semibold block mb-1"
+            >Coresterol {{ userData.cholesterol_level }} mg/dL</span
+          >
+          <span :class="stateCoresterol(userData.cholesterol_level).class">{{
+            stateCoresterol(userData.cholesterol_level).text
+          }}</span>
         </div>
 
         <div class="bg-blue-50/50 rounded-xl p-4 transition-transform">
@@ -54,7 +58,7 @@
           <span class="text-[#0055ff] font-semibold block mb-1"
             >Probabilidad de desarrollar cáncer</span
           >
-          <span class="text-slate-400 truncate">{{
+          <span class="text-slate-400">{{
             probability !== null ? (probability * 100).toFixed(1) + '%' : 'N/A'
           }}</span>
         </div>
@@ -90,6 +94,49 @@ const stateUser = (value: number) => {
     return {
       text: 'Desconocido',
       class: 'bg-slate-200 text-slate-400 ring-2 ring-slate-300/50 shadow-slate-200/50',
+    }
+  }
+}
+
+const stateImc = (value: number) => {
+  if (value < 18.5) {
+    return {
+      text: 'Bajo peso',
+      class: 'text-slate-600',
+    }
+  } else if (value >= 18.5 && value <= 24.9) {
+    return {
+      text: 'Peso saludable',
+      class: 'text-green-600',
+    }
+  } else if (value >= 25 && value <= 29.9) {
+    return {
+      text: 'Sobrepeso',
+      class: 'text-yellow-600',
+    }
+  } else {
+    return {
+      text: 'Obesidad',
+      class: 'text-red-600',
+    }
+  }
+}
+
+const stateCoresterol = (value: number) => {
+  if (value < 200) {
+    return {
+      text: 'Deseable ',
+      class: 'text-green-600',
+    }
+  } else if (value >= 200 && value <= 239) {
+    return {
+      text: 'Límite alto',
+      class: 'text-yellow-600',
+    }
+  } else {
+    return {
+      text: 'Muy alto',
+      class: 'text-red-600',
     }
   }
 }
