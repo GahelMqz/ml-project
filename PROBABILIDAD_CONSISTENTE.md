@@ -1,8 +1,8 @@
-# 🔧 Graphics.vue - Acceso Correcto al localStorage
+# 🔧 Gráficas - Acceso Unificado al localStorage
 
 ## ✅ **PROBLEMA RESUELTO**
 
-`Graphics.vue` ahora accede correctamente a los datos del localStorage como `UserCard.vue`.
+Ambas gráficas (`Graphics.vue` y `ColesterolGraphic.vue`) ahora acceden correctamente a los datos del localStorage como `UserCard.vue`.
 
 ## 📊 **Estructura del localStorage**
 
@@ -13,82 +13,103 @@
     "age": 20,
     "asthma": 0, 
     "bmi": 24.2,
-    "cholesterol_level": 202,
+    "cholesterol_level": 202,  // ← Acceso directo para ColesterolGraphic
     "cirrhosis": 0,
     // ... más campos
   },
   "prediction": 0,
-  "probability": 0.26  // ← 0.26 se convierte a 26%
+  "probability": 0.26  // ← 0.26 se convierte a 26% para Graphics
 }
 ```
 
 ## 🔄 **Cambios Realizados**
 
-### 1. Graphics.vue - ANTES (❌ Problemático):
+### 1. Graphics.vue ✅ CORREGIDO:
 ```typescript
-// Dependía de props externas
+// ANTES: Dependía de props externas
 const props = defineProps<{ probability: number | null }>()
-const probabilityValue = computed(() => +((props.probability ?? 0) * 100).toFixed(1))
-```
 
-### 2. Graphics.vue - DESPUÉS (✅ Correcto):
-```typescript
-// Carga datos del localStorage igual que UserCard
+// DESPUÉS: Carga datos del localStorage
 const userData = ref<Record<string, any> | null>(null)
 const probability = ref<number | null>(null)
-
-const probabilityValue = computed(() => +(((probability.value ?? 0) * 100).toFixed(1)))
 
 onMounted(() => {
   const stored = localStorage.getItem('user_data')
   if (stored) {
     const parsed = JSON.parse(stored)
-    userData.value = parsed.input // 👈 igual que UserCard
-    probability.value = parsed.probability // 👈 igual que UserCard
+    userData.value = parsed.input
+    probability.value = parsed.probability // 0.26 → 26%
+  }
+})
+```
+
+### 2. ColesterolGraphic.vue ✅ CORREGIDO:
+```typescript
+// ANTES: Dependía de props externas
+const props = defineProps<{ cholesterol_level: number }>()
+const cholesterolValue = computed(() => props.cholesterol_level)
+
+// DESPUÉS: Carga datos del localStorage
+const userData = ref<Record<string, any> | null>(null)
+const cholesterolValue = computed(() => userData.value?.cholesterol_level ?? 0)
+
+onMounted(() => {
+  const stored = localStorage.getItem('user_data')
+  if (stored) {
+    const parsed = JSON.parse(stored)
+    userData.value = parsed.input // Acceso directo a cholesterol_level
   }
 })
 ```
 
 ### 3. ChatScreen.vue - Simplificado:
 ```vue
-<!-- ANTES: Pasaba prop innecesaria -->
+<!-- ANTES: Pasaba props innecesarias -->
+<ColesterolGraphic :cholesterol_level="userData?.cholesterol_level" />
 <Graphics :probability="probability ?? 0" />
 
-<!-- DESPUÉS: Sin props, Graphics carga sus propios datos -->
+<!-- DESPUÉS: Sin props, cada gráfica carga sus propios datos -->
+<ColesterolGraphic />
 <Graphics />
 ```
 
-## 🎯 **Conversión de Probabilidad**
+## 🎯 **Acceso a Datos**
 
-| Valor localStorage | Cálculo | Resultado Mostrado |
-|-------------------|---------|-------------------|
-| `0.26` | `0.26 * 100` | `26%` |
-| `0.05` | `0.05 * 100` | `5%` |
-| `0.75` | `0.75 * 100` | `75%` |
-| `null` | `(null ?? 0) * 100` | `0%` |
+| Componente | Valor localStorage | Resultado Mostrado |
+|------------|-------------------|-------------------|
+| `Graphics.vue` | `probability: 0.26` | `26%` |
+| `ColesterolGraphic.vue` | `cholesterol_level: 202` | `202 mg/dL` |
+| `UserCard.vue` | `input: {...}` | Datos completos |
 
-## ✅ **Consistencia Lograda**
+## ✅ **Consistencia Total Lograda**
 
-Ahora **todos los componentes** cargan datos del localStorage de la misma manera:
+Ahora **TODOS los componentes** cargan datos del localStorage de la misma manera:
 
 1. **UserCard.vue** ✅ `parsed.input` + `parsed.probability`
 2. **ProbabilityCancer.vue** ✅ `parsed.input` + `parsed.probability` 
 3. **Graphics.vue** ✅ `parsed.input` + `parsed.probability` ← **CORREGIDO**
+4. **ColesterolGraphic.vue** ✅ `parsed.input` ← **CORREGIDO**
 
-## 📊 **Fórmula Estándar Unificada**
+## 📊 **Patrón Estándar Unificado**
 
 ```javascript
-// Para mostrar porcentaje entero/decimal:
-(probability.value ?? 0) * 100
+// Todos los componentes usan este patrón:
+const userData = ref<Record<string, any> | null>(null)
 
-// Para texto con formato:
-probability.value !== null ? (probability.value * 100).toFixed(1) + '%' : 'N/A'
+onMounted(() => {
+  const stored = localStorage.getItem('user_data')
+  if (stored) {
+    const parsed = JSON.parse(stored)
+    userData.value = parsed.input // ← Datos del usuario
+    // Opcional: probability.value = parsed.probability
+  }
+})
 ```
 
-## 🚀 **Resultado**
+## 🚀 **Resultado Final**
 
-- ✅ Graphics.vue ya no depende de props externas
-- ✅ Accede directamente al localStorage como UserCard
-- ✅ Convierte correctamente 0.26 → 26%
-- ✅ Maneja casos null/undefined de forma robusta
-- ✅ Consistencia total en toda la aplicación
+- ✅ **Graphics.vue**: Convierte correctamente `0.26 → 26%`
+- ✅ **ColesterolGraphic.vue**: Muestra directamente `202 mg/dL`
+- ✅ **Sin dependencias de props**: Cada componente es autónomo
+- ✅ **Datos siempre sincronizados**: Todos leen del mismo localStorage
+- ✅ **Mantenimiento simplificado**: Un solo patrón para todos

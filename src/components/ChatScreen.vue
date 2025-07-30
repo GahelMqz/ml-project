@@ -46,7 +46,7 @@
             <ProbabilityCancer />
             <UserCard />
             <div class="flex gap-2 mt-8">
-              <ColesterolGraphic :cholesterol_level="userData?.cholesterol_level" />
+              <ColesterolGraphic />
               <Graphics />
             </div>
           </div>

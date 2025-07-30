@@ -27,13 +27,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 defineOptions({ name: 'CholesterolThermometerVisual' })
 
-const props = defineProps<{ cholesterol_level: number }>()
+// ✅ CORREGIDO: Cargar datos del localStorage igual que UserCard
+const userData = ref<Record<string, any> | null>(null)
 
-const cholesterolValue = computed(() => props.cholesterol_level)
+// ✅ Usar el valor del localStorage
+const cholesterolValue = computed(() => userData.value?.cholesterol_level ?? 0)
 const fillHeight = computed(() => Math.min(cholesterolValue.value, 300) / 3) // Escala del 0–300
 
 const fillColor = computed(() => {
@@ -61,6 +63,15 @@ const state = computed(() => {
       text: 'Alto',
       class: 'bg-red-100 text-red-800 ring-2 ring-red-300/50 shadow-red-200/50'
     }
+  }
+})
+
+// ✅ CORREGIDO: Cargar del localStorage igual que UserCard
+onMounted(() => {
+  const stored = localStorage.getItem('user_data')
+  if (stored) {
+    const parsed = JSON.parse(stored)
+    userData.value = parsed.input // 👈 igual que UserCard
   }
 })
 </script>
