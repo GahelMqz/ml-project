@@ -42,7 +42,8 @@
           </div>
 
           <div v-else-if="msg.from === 'json'" class="bg-gray-100 p-4 rounded-md font-mono text-sm">
-            <pre>{{ msg.text }}</pre>
+            <!-- <pre>{{ msg.text }}</pre> -->
+            <UserCard />
           </div>
           <div v-else-if="msg.from === 'error'" class="text-red-500">⚠️ {{ msg.text }}</div>
         </div>
@@ -62,6 +63,7 @@ import { useChatWizard } from '../chatWizard'
 import { onMounted } from 'vue'
 import IconUser from './icons/IconUser.vue'
 import ResetChat from './ResetChat.vue'
+import UserCard from './UserCard.vue'
 // import Test from './Test.vue'
 
 // Mensajes acumulados

@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import ChatScreen from './components/ChatScreen.vue'
-import IconLoading from './components/icons/IconLoading.vue'
-import { isLoading } from './stores/loadingStore'
 </script>
 
 <template>
