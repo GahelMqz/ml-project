@@ -2,6 +2,7 @@
 //import { sendPrediction } from './predictService.ts'
 import { askLLM, buildMedicalPrompt } from '@/openAi'
 import { sendPrediction } from './predictService'
+import { isLoading } from './stores/loadingStore'
 
 export interface PatientData {
   smoking_status: number
@@ -55,7 +56,7 @@ const questions: Question[] = [
   { key: 'weight', text: 'Dime cuánto pesas en KG', type: 'number' },
   {
     key: 'cholesterol_level',
-    text: '¿Conoces tu nivel de colesterol? 🟢Deseable (menos de 200mg/dl) | 🟡Alto (entre 200 - 239mg/dl) | 🔴Muy Alto (mas de 240mg/dl)',
+    text: '¿Conoces tu nivel de colesterol?, si es así dime cuál es',
     type: 'number',
   },
   { key: 'hypertension', text: '¿Tienes hipertensión?', type: 'boolean' },
@@ -430,6 +431,8 @@ export const useChatWizard = () => {
 
     // 🚀 Enviar datos al endpoint y guardar respuesta
     try {
+      isLoading.value = true
+
       const response = await sendPrediction(finalJson)
       console.log('✅ Respuesta del endpoint:', response)
 
@@ -444,6 +447,8 @@ export const useChatWizard = () => {
       localStorage.setItem('filtered_data', JSON.stringify(response.filtered_data))
     } catch (error) {
       console.error('❌ Error al enviar los datos al endpoint:', error)
+    } finally {
+      isLoading.value = false
     }
 
     const suggestions = generateContextualSuggestion()

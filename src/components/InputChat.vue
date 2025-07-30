@@ -3,6 +3,8 @@ import IconArrowUp from '@/components/icons/IconArrowUp.vue'
 import { ref } from 'vue'
 import { useChatWizard } from '@/chatWizard'
 import { askLLM, buildMedicalPrompt } from '@/openAi'
+import { isLoading } from '@/stores/loadingStore'
+import LoadingModal from './LoadingModal.vue'
 
 const emit = defineEmits(['newMessage'])
 
@@ -91,6 +93,8 @@ const handleKeydown = (e: any) => {
         <IconArrowUp />
       </button>
     </div>
+
+    <LoadingModal v-if="isLoading" />
   </div>
 </template>
 
