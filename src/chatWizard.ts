@@ -433,6 +433,7 @@ export const useChatWizard = () => {
     try {
       isLoading.value = true
 
+      console.log('Enviando datos al endpoint:', finalJson)
       const response = await sendPrediction(finalJson)
       console.log('✅ Respuesta del endpoint:', response)
 

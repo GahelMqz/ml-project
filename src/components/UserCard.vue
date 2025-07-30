@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-gradient-to-br from-white to-blue-100 rounded-2xl shadow-md shadow-blue-200 transition-all duration-400 p-8 max-w-md w-full border-2 border-blue-200 overflow-hidden relative mb-8"
+    class="bg-gradient-to-br from-white to-blue-100 rounded-2xl shadow-md shadow-blue-200 border-2 border-blue-200 transition-all duration-400 p-8 max-w-md w-full  overflow-hidden relative mb-8"
     v-if="userData"
   >
     <!-- Decorative corner element -->

@@ -4,7 +4,7 @@ import ChatScreen from './components/ChatScreen.vue'
 
 <template>
   <div class="h-screen flex flex-col">
-    <div class="custom-scrollbar flex-1 overflow-y-auto w-full mx-auto max-w-4xl px-16">
+    <div class="custom-scrollbar flex-1 overflow-y-auto 1w-full mx-auto max-w-4xl px-16">
       <ChatScreen />
     </div>
   </div>

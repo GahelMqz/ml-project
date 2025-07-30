@@ -97,7 +97,7 @@ const chartOptions = ref({
 </script>
 
 <template>
-  <div class="p-6 bg-white rounded-2xl shadow-lg max-w-4xl mx-auto">
+  <div class="bg-gradient-to-br from-white to-blue-100 rounded-2xl shadow-md shadow-blue-200 border-2 border-blue-200 p-6 max-w-4xl mx-auto">
     <div class="mb-4 text-gray-700">
       <p class="text-lg font-semibold">
         Casos similares encontrados: <span class="text-purple-600">{{ similarCasesCount }}</span>
