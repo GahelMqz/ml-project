@@ -43,6 +43,7 @@
 
           <div v-else-if="msg.from === 'json'" class="p-4 rounded-md">
             <!-- <pre>{{ msg.text }}</pre> -->
+            <ProbabilityCancer />
             <UserCard />
             <div class="flex gap-2 mt-8">
               <ColesterolGraphic :cholesterol_level="userData?.cholesterol_level" />
@@ -70,6 +71,7 @@ import ResetChat from './ResetChat.vue'
 import UserCard from './UserCard.vue'
 import Graphics from './Graphics.vue'
 import ColesterolGraphic from './ColesterolGraphic.vue'
+import ProbabilityCancer from '@/components/ProbabilityCancer.vue'
 // import Test from './Test.vue'
 
 // Mensajes acumulados
