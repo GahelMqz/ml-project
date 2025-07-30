@@ -41,9 +41,13 @@
             {{ msg.text }}
           </div>
 
-          <div v-else-if="msg.from === 'json'" class="bg-gray-100 p-4 rounded-md font-mono text-sm">
+          <div v-else-if="msg.from === 'json'" class="p-4 rounded-md">
             <!-- <pre>{{ msg.text }}</pre> -->
             <UserCard />
+            <div class="flex gap-2 mt-8">
+              <ColesterolGraphic :cholesterol_level="userData?.cholesterol_level" />
+              <Graphics :probability="probability ?? 0" />
+            </div>
           </div>
           <div v-else-if="msg.from === 'error'" class="text-red-500">⚠️ {{ msg.text }}</div>
         </div>
@@ -64,6 +68,8 @@ import { onMounted } from 'vue'
 import IconUser from './icons/IconUser.vue'
 import ResetChat from './ResetChat.vue'
 import UserCard from './UserCard.vue'
+import Graphics from './Graphics.vue'
+import ColesterolGraphic from './ColesterolGraphic.vue'
 // import Test from './Test.vue'
 
 // Mensajes acumulados
@@ -109,6 +115,18 @@ function getAnimationClass(msg: any) {
   if (msg.from === 'user') return 'slide-from-right'
   return ''
 }
+
+const userData = ref<Record<string, any> | null>(null)
+const probability = ref<number | null>(null)
+
+onMounted(() => {
+  const stored = localStorage.getItem('user_data')
+  if (stored) {
+    const parsed = JSON.parse(stored)
+    userData.value = parsed.input // 👈 aquí está el cambio clave
+    probability.value = parsed.probability
+  }
+})
 </script>
 
 <style scoped>

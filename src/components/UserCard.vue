@@ -51,7 +51,9 @@
 
         <div class="bg-blue-50/50 rounded-xl p-4 transition-transform">
           <span class="text-[#0055ff] font-semibold block mb-1">Tipo de fumador</span>
-          <span class="text-slate-400">{{ transformSmoking_status(userData.smoking_status) }}</span>
+          <span class="text-slate-400">{{
+            transformSmoking_status(userData.smoking_status).text
+          }}</span>
         </div>
 
         <div class="bg-blue-50/50 rounded-xl p-4 transition-transform">
@@ -101,7 +103,7 @@
 
           <p
             class="text-slate-400 mb-2"
-            v-for="(tips, index) in stateUser(probability).tips"
+            v-for="(tips, index) in stateUser((probability ?? 0) * 100).tips"
             :key="index"
           >
             <span class="text-pink-600">● </span>{{ tips }}
@@ -114,7 +116,7 @@
               >Según el tipo de fumador que eres</span
             >
             <span
-              class="font-semibold text-center px-2 py-1 rounded-full tracking-wider shadow-md bg-slate-200 text-slate-400 ring-2 ring-slate-300/50 shadow-slate-200/50"
+              class="font-semibold text-center px-2 py-1 rounded-full tracking-wider shadow-md bg-slate-100 text-slate-800 ring-2 ring-slate-300/50 shadow-slate-200/50"
             >
               {{ transformSmoking_status(userData.smoking_status).text }}
             </span>
