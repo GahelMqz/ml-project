@@ -51,6 +51,9 @@
             </div>
           </div>
           <div v-else-if="msg.from === 'error'" class="text-red-500">⚠️ {{ msg.text }}</div>
+          <div class="w-full mx-auto max-w-4xl p-4" v-if="msg.from === 'json'">
+            <ComparesionCard></ComparesionCard>
+          </div>
         </div>
       </TransitionGroup>
     </div>
@@ -65,19 +68,21 @@
 import { nextTick, ref, watch } from 'vue'
 import InputChat from './InputChat.vue'
 import { useChatWizard } from '../chatWizard'
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import IconUser from './icons/IconUser.vue'
 import ResetChat from './ResetChat.vue'
 import UserCard from './UserCard.vue'
 import Graphics from './Graphics.vue'
 import ColesterolGraphic from './ColesterolGraphic.vue'
 import ProbabilityCancer from '@/components/ProbabilityCancer.vue'
+import ComparesionCard from './ComparesionCard.vue'
 // import Test from './Test.vue'
 
 // Mensajes acumulados
 const messages = ref<{ text: string; from: 'bot' | 'user' | 'system' | 'json' | 'error' }[]>([])
 
 const messagesContainer = ref<HTMLElement | null>(null)
+
 
 // Hacer scroll hacia abajo cada vez que se agregue un nuevo mensaje
 watch(messages, async () => {
